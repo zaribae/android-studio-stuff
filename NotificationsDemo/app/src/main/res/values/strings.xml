@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">NotificationsDemo</string>
+    <string name="lbl_btn_create_notif">Create Notifications</string>
+</resources>
