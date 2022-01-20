@@ -3,4 +3,6 @@
     <string name="str_lbl_btn_send">Send</string>
     <string name="str_menu_search_devices">Search Devices</string>
     <string name="str_menu_bluetooth_on">Switch on Bluetooth</string>
+    <string name="str_paired_device">Paired Device</string>
+    <string name="str_available_device">Available Devices</string>
 </resources>
