@@ -5,4 +5,5 @@
     <string name="str_menu_bluetooth_on">Switch on Bluetooth</string>
     <string name="str_paired_device">Paired Device</string>
     <string name="str_available_device">Available Devices</string>
+    <string name="str_menu_scan_devices">Scan Devices</string>
 </resources>
