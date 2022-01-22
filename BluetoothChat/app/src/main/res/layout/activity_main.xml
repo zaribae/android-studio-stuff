@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <ListView
-        android:id="@+id/list_conversayion"
+        android:id="@+id/list_conversation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
@@ -25,6 +25,7 @@
             android:layout_marginEnd="100dp" />
 
         <Button
+            android:id="@+id/btn_send_message"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="@string/str_lbl_btn_send"

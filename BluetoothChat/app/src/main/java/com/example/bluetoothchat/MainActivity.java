@@ -18,8 +18,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private Context context;
@@ -27,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
     private final int LOCATION_PERMISSION_REQUEST = 101;
     private final int SELECT_DEVICE = 102;
     private ChatUtils chatUtils;
+
+    private ListView listViewChat;
+    private EditText editTextChat;
+    private Button btnSendChat;
+    private ArrayAdapter<String> adapterChat;
 
     private String connectedDevice;
     public static final String DEVICE_NAME = "deviceName";
@@ -58,8 +71,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case MESSAGE_READ:
+                    byte[] buffer = (byte[]) message.obj;
+                    String inputBuffer = new String(buffer, 0, message.arg2);
+                    adapterChat.add(connectedDevice + ": " + inputBuffer);
                     break;
                 case MESSAGE_WRITE:
+                    byte[] buffer2 = (byte[]) message.obj;
+                    String outputBuffer = new String(buffer2);
+                    adapterChat.add("Me: " + outputBuffer);
                     break;
                 case MESSAGE_DEVICE_NAME:
                     connectedDevice = message.getData().getString(DEVICE_NAME);
@@ -84,8 +103,29 @@ public class MainActivity extends AppCompatActivity {
 
         context = this;
 
-        chatUtils = new ChatUtils(context, handler);
+        init();
         initBluetooth();
+        chatUtils = new ChatUtils(context, handler);
+    }
+
+    private void init() {
+        listViewChat = findViewById(R.id.list_conversation);
+        editTextChat = findViewById(R.id.ed_message);
+        btnSendChat = findViewById(R.id.btn_send_message);
+
+        adapterChat = new ArrayAdapter<String>(context, R.layout.message_layout);
+        listViewChat.setAdapter(adapterChat);
+
+        btnSendChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = editTextChat.getText().toString();
+                if (!message.isEmpty()) {
+                    editTextChat.setText("");
+                    chatUtils.write(message.getBytes());
+                }
+            }
+        });
     }
 
     private void initBluetooth() {
